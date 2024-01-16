@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/connect-four-game/static/css/main.90a8015d.css",
+    "main.js": "/connect-four-game/static/js/main.9e93d5a7.js",
+    "static/js/787.7fde292d.chunk.js": "/connect-four-game/static/js/787.7fde292d.chunk.js",
+    "index.html": "/connect-four-game/index.html",
+    "main.90a8015d.css.map": "/connect-four-game/static/css/main.90a8015d.css.map",
+    "main.9e93d5a7.js.map": "/connect-four-game/static/js/main.9e93d5a7.js.map",
+    "787.7fde292d.chunk.js.map": "/connect-four-game/static/js/787.7fde292d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.90a8015d.css",
+    "static/js/main.9e93d5a7.js"
+  ]
+}
