@@ -2,12 +2,15 @@
   "name": "connect-four-game",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Astrix1234.github.io/connect-four-game/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "modern-normalize": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
