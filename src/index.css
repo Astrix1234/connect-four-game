@@ -18,8 +18,8 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bgc-color);
-  color: var(--super-dark);
+  background-color: var(--light-blue);
+  color: var(dark);
 
 }
 
