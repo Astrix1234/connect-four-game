@@ -1,6 +1,6 @@
 import React from 'react';
 import scss from './Buttons.module.scss';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 export const Buttons = ({ text, icon, classes, onClick }) => {
   return (
@@ -14,8 +14,8 @@ export const Buttons = ({ text, icon, classes, onClick }) => {
 };
 
 Buttons.propTypes = {
-  text: propTypes.string.isRequired,
-  icon: propTypes.string,
-  classes: propTypes.string,
-  onClick: propTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+  icon: PropTypes.element,
+  classes: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 };
