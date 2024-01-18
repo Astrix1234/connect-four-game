@@ -1,0 +1,52 @@
+.game {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    &__bottomBar {
+        width: 100%;
+        background-color: var(--dark-blue);
+        margin-top: auto;
+        border-radius: 60px 60px 0px 0px;
+    }
+}
+
+.gameDesktop {
+    &__bottomBar {
+        height: 200px;
+    }
+}
+
+.gameTablet {
+    &__bottomBar {
+        height: 234px;
+    }
+}
+
+.gameMobile {
+    &__bottomBar {
+        height: 236px;
+    }
+}
+
+
+
+
+.bottomBar {
+    width: 100%;
+    background-color: var(--dark-blue);
+    margin-top: auto;
+    border-radius: 60px 60px 0px 0px;
+}
+
+.bottomBarDesktop {
+    height: 200px;
+}
+
+.bottomBarTablet {
+    height: 234px;
+}
+
+.bottomBarMobile {
+    height: 236px;
+}
