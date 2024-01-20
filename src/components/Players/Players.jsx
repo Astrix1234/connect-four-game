@@ -1,0 +1,60 @@
+import React from 'react';
+import scss from './Players.module.scss';
+import { useMediaQuery } from 'react-responsive';
+import { ReactComponent as PlayerOne } from '../../assets/images/player-one.svg';
+import { ReactComponent as PlayerTwo } from '../../assets/images/player-two.svg';
+
+export const Players = () => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
+
+  let playersStyles = scss.players;
+  let playerStyles = scss.players__player;
+  let playerNameStyle = scss.players__playerName;
+  let playerScoreStyle = scss.players__playerScore;
+  let playerOneStyle = scss.players__playerOne;
+  let playerTwoStyle = scss.players__playerTwo;
+
+  if (isMobile) {
+    playersStyles += ` ${scss.playersMobile}`;
+    playerStyles += ` ${scss.playersMobile__player}`;
+    playerNameStyle += ` ${scss.playersMobile__playerName}`;
+    playerScoreStyle += ` ${scss.playersMobile__playerScore}`;
+    playerOneStyle += ` ${scss.playersMobile__playerOne}`;
+    playerTwoStyle += ` ${scss.playersMobile__playerTwo}`;
+  } else if (isTablet) {
+    playersStyles += ` ${scss.playersTablet}`;
+    playerStyles += ` ${scss.playersTablet__player}`;
+    playerNameStyle += ` ${scss.playersTablet__playerName}`;
+    playerScoreStyle += ` ${scss.playersTablet__playerScore}`;
+    playerOneStyle += ` ${scss.playersTablet__playerOne}`;
+    playerTwoStyle += ` ${scss.playersTablet__playerTwo}`;
+  } else if (isDesktop) {
+    playersStyles += ` ${scss.playersDesktop}`;
+    playerStyles += ` ${scss.playersDesktop__player}`;
+    playerNameStyle += ` ${scss.playersDesktop__playerName}`;
+    playerScoreStyle += ` ${scss.playersDesktop__playerScore}`;
+    playerOneStyle += ` ${scss.playersDesktop__playerOne}`;
+    playerTwoStyle += ` ${scss.playersDesktop__playerTwo}`;
+  }
+
+  return (
+    <div className={playersStyles}>
+      <div className={playerStyles}>
+        <div className={playerNameStyle}>PLAYER 1</div>
+        <div className={playerScoreStyle}>0</div>
+        <div className={playerOneStyle}>
+          <PlayerOne />
+        </div>
+      </div>
+      <div className={playerStyles}>
+        <div className={playerNameStyle}>PLAYER 2</div>
+        <div className={playerScoreStyle}>0</div>
+        <div className={playerTwoStyle}>
+          <PlayerTwo />
+        </div>
+      </div>
+    </div>
+  );
+};
