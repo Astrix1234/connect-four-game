@@ -1,30 +1,36 @@
 {
   "files": {
     "main.css": "/connect-four-game/static/css/main.46988858.css",
-    "main.js": "/connect-four-game/static/js/main.e50d8e3b.js",
-    "static/css/81.a4198ae2.chunk.css": "/connect-four-game/static/css/81.a4198ae2.chunk.css",
-    "static/js/81.098b313e.chunk.js": "/connect-four-game/static/js/81.098b313e.chunk.js",
-    "static/css/492.3bd23c45.chunk.css": "/connect-four-game/static/css/492.3bd23c45.chunk.css",
-    "static/js/492.ff27c391.chunk.js": "/connect-four-game/static/js/492.ff27c391.chunk.js",
+    "main.js": "/connect-four-game/static/js/main.fcdddf8f.js",
+    "static/css/823.5cadf402.chunk.css": "/connect-four-game/static/css/823.5cadf402.chunk.css",
+    "static/js/823.8a22b4ff.chunk.js": "/connect-four-game/static/js/823.8a22b4ff.chunk.js",
+    "static/css/44.3aaada39.chunk.css": "/connect-four-game/static/css/44.3aaada39.chunk.css",
+    "static/js/44.485a7e0c.chunk.js": "/connect-four-game/static/js/44.485a7e0c.chunk.js",
     "static/js/787.7fde292d.chunk.js": "/connect-four-game/static/js/787.7fde292d.chunk.js",
     "static/js/805.56339535.chunk.js": "/connect-four-game/static/js/805.56339535.chunk.js",
+    "static/media/board-layer-black-small.svg": "/connect-four-game/static/media/board-layer-black-small.42afffd73e45d00ba497d42094c95366.svg",
+    "static/media/board-layer-black-large.svg": "/connect-four-game/static/media/board-layer-black-large.33490574022d850673c1e8c8d9a20fd2.svg",
+    "static/media/board-layer-white-large.svg": "/connect-four-game/static/media/board-layer-white-large.8d1e0d20b4249f8a7e07acb0c2341940.svg",
+    "static/media/board-layer-white-small.svg": "/connect-four-game/static/media/board-layer-white-small.0c56315ab5bb47330f80c6c693684254.svg",
     "static/media/player-vs-player.svg": "/connect-four-game/static/media/player-vs-player.0f4120171bf670fca99a7e7099d547d0.svg",
     "static/media/player-vs-cpu.svg": "/connect-four-game/static/media/player-vs-cpu.c864805caf4d283a8c1f506a4b7452a5.svg",
     "static/media/logo.svg": "/connect-four-game/static/media/logo.18f406c1e091b7f33f727e65e6a8cf5b.svg",
+    "static/media/player-two.svg": "/connect-four-game/static/media/player-two.3808ca69d8458efbdca19bd10962ae09.svg",
     "index.html": "/connect-four-game/index.html",
+    "static/media/player-one.svg": "/connect-four-game/static/media/player-one.dddd4c6dd39939e6572b23602ed52bf8.svg",
     "static/media/icon-check-hover.svg": "/connect-four-game/static/media/icon-check-hover.30a3e789fd707b5656b0c6fae97b002d.svg",
     "static/media/icon-check.svg": "/connect-four-game/static/media/icon-check.09edb9dc6d34aac5a1b039e28520070b.svg",
     "main.46988858.css.map": "/connect-four-game/static/css/main.46988858.css.map",
-    "main.e50d8e3b.js.map": "/connect-four-game/static/js/main.e50d8e3b.js.map",
-    "81.a4198ae2.chunk.css.map": "/connect-four-game/static/css/81.a4198ae2.chunk.css.map",
-    "81.098b313e.chunk.js.map": "/connect-four-game/static/js/81.098b313e.chunk.js.map",
-    "492.3bd23c45.chunk.css.map": "/connect-four-game/static/css/492.3bd23c45.chunk.css.map",
-    "492.ff27c391.chunk.js.map": "/connect-four-game/static/js/492.ff27c391.chunk.js.map",
+    "main.fcdddf8f.js.map": "/connect-four-game/static/js/main.fcdddf8f.js.map",
+    "823.5cadf402.chunk.css.map": "/connect-four-game/static/css/823.5cadf402.chunk.css.map",
+    "823.8a22b4ff.chunk.js.map": "/connect-four-game/static/js/823.8a22b4ff.chunk.js.map",
+    "44.3aaada39.chunk.css.map": "/connect-four-game/static/css/44.3aaada39.chunk.css.map",
+    "44.485a7e0c.chunk.js.map": "/connect-four-game/static/js/44.485a7e0c.chunk.js.map",
     "787.7fde292d.chunk.js.map": "/connect-four-game/static/js/787.7fde292d.chunk.js.map",
     "805.56339535.chunk.js.map": "/connect-four-game/static/js/805.56339535.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46988858.css",
-    "static/js/main.e50d8e3b.js"
+    "static/js/main.fcdddf8f.js"
   ]
 }
