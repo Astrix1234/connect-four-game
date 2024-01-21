@@ -29,16 +29,80 @@
         left: 50%;
         transform: translateX(-50%);
         top: 82px;
+        width: 38px;
+        height: 36px;
+        background-image: url("../../assets/images/marker-red.svg");
     }
 
     &__turn {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        width: 191px;
-        height: 160px;
-        background-color: red;
+        width: 197px;
+        height: 165px;
         z-index: 400;
+        background-image: url("../../assets/images/turn-background-red.svg");
+    }
+
+    &__turnText {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--light);
+        text-align: center;
+        margin: 46px 0 3px 0;
+    }
+
+    &__turnCounter {
+        font-size: 56px;
+        font-weight: 700;
+        color: var(--light);
+        text-align: center;
+
+    }
+
+    &__wins {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 285px;
+        height: 160px;
+        z-index: 500;
+        background-color: var(--light);
+        border-radius: 20px;
+        border: 3px solid var(--dark);
+        box-shadow: 0px 10px 0px 0px var(--dark);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__winsPlayer {
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 17px;
+    }
+
+    &__winsWins {
+        font-size: 56px;
+        font-weight: 700;
+
+    }
+
+    &__winsButton {
+        width: 130px;
+        height: 39px;
+        border-radius: 20px;
+        border: none;
+        background-color: var(--dark-blue);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--light);
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover {
+            background-color: var(--rose);
+            cursor: pointer;
+        }
     }
 }
 
@@ -58,6 +122,10 @@
     &__turn {
         top: 660px;
     }
+
+    &__wins {
+        top: 660px;
+    }
 }
 
 .gameTablet {
@@ -71,10 +139,13 @@
 
     &__bottomBar {
         height: 234px;
-        top: 790px;
     }
 
     &__turn {
+        top: 790px;
+    }
+
+    &__wins {
         top: 790px;
     }
 }
@@ -93,6 +164,10 @@
     }
 
     &__turn {
+        top: 566px;
+    }
+
+    &__wins {
         top: 566px;
     }
 }
