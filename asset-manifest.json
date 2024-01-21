@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/connect-four-game/static/css/main.46988858.css",
-    "main.js": "/connect-four-game/static/js/main.fcdddf8f.js",
-    "static/css/823.5cadf402.chunk.css": "/connect-four-game/static/css/823.5cadf402.chunk.css",
-    "static/js/823.8a22b4ff.chunk.js": "/connect-four-game/static/js/823.8a22b4ff.chunk.js",
-    "static/css/44.3aaada39.chunk.css": "/connect-four-game/static/css/44.3aaada39.chunk.css",
-    "static/js/44.485a7e0c.chunk.js": "/connect-four-game/static/js/44.485a7e0c.chunk.js",
+    "main.js": "/connect-four-game/static/js/main.6598c5e1.js",
+    "static/css/435.38f4cfff.chunk.css": "/connect-four-game/static/css/435.38f4cfff.chunk.css",
+    "static/js/435.1efa1b71.chunk.js": "/connect-four-game/static/js/435.1efa1b71.chunk.js",
+    "static/css/976.5debd895.chunk.css": "/connect-four-game/static/css/976.5debd895.chunk.css",
+    "static/js/976.48f8bdbb.chunk.js": "/connect-four-game/static/js/976.48f8bdbb.chunk.js",
     "static/js/787.7fde292d.chunk.js": "/connect-four-game/static/js/787.7fde292d.chunk.js",
     "static/js/805.56339535.chunk.js": "/connect-four-game/static/js/805.56339535.chunk.js",
     "static/media/board-layer-black-small.svg": "/connect-four-game/static/media/board-layer-black-small.42afffd73e45d00ba497d42094c95366.svg",
@@ -18,19 +18,20 @@
     "static/media/player-two.svg": "/connect-four-game/static/media/player-two.3808ca69d8458efbdca19bd10962ae09.svg",
     "index.html": "/connect-four-game/index.html",
     "static/media/player-one.svg": "/connect-four-game/static/media/player-one.dddd4c6dd39939e6572b23602ed52bf8.svg",
+    "static/media/marker-red.svg": "/connect-four-game/static/media/marker-red.201fc49ae1d8753513aeda6bd7021db2.svg",
     "static/media/icon-check-hover.svg": "/connect-four-game/static/media/icon-check-hover.30a3e789fd707b5656b0c6fae97b002d.svg",
     "static/media/icon-check.svg": "/connect-four-game/static/media/icon-check.09edb9dc6d34aac5a1b039e28520070b.svg",
     "main.46988858.css.map": "/connect-four-game/static/css/main.46988858.css.map",
-    "main.fcdddf8f.js.map": "/connect-four-game/static/js/main.fcdddf8f.js.map",
-    "823.5cadf402.chunk.css.map": "/connect-four-game/static/css/823.5cadf402.chunk.css.map",
-    "823.8a22b4ff.chunk.js.map": "/connect-four-game/static/js/823.8a22b4ff.chunk.js.map",
-    "44.3aaada39.chunk.css.map": "/connect-four-game/static/css/44.3aaada39.chunk.css.map",
-    "44.485a7e0c.chunk.js.map": "/connect-four-game/static/js/44.485a7e0c.chunk.js.map",
+    "main.6598c5e1.js.map": "/connect-four-game/static/js/main.6598c5e1.js.map",
+    "435.38f4cfff.chunk.css.map": "/connect-four-game/static/css/435.38f4cfff.chunk.css.map",
+    "435.1efa1b71.chunk.js.map": "/connect-four-game/static/js/435.1efa1b71.chunk.js.map",
+    "976.5debd895.chunk.css.map": "/connect-four-game/static/css/976.5debd895.chunk.css.map",
+    "976.48f8bdbb.chunk.js.map": "/connect-four-game/static/js/976.48f8bdbb.chunk.js.map",
     "787.7fde292d.chunk.js.map": "/connect-four-game/static/js/787.7fde292d.chunk.js.map",
     "805.56339535.chunk.js.map": "/connect-four-game/static/js/805.56339535.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46988858.css",
-    "static/js/main.fcdddf8f.js"
+    "static/js/main.6598c5e1.js"
   ]
 }
