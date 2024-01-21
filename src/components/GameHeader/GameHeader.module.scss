@@ -3,9 +3,41 @@
     z-index: 10;
     display: flex;
     width: 100%;
-    max-width: 632px;
     justify-content: space-between;
+    align-items: center;
     left: 50%;
-    top: 13px;
     transform: translateX(-50%);
+
+    &__button {
+        width: 108px;
+        height: 39px;
+        background-color: var(--dark-blue);
+        border-radius: 20px;
+        color: var(--light);
+        font-size: 16px;
+        font-weight: 700;
+        border: none;
+        transition: background-color 0.3s ease-in-out;
+
+        &:hover,
+        &:focus {
+            background-color: var(--rose);
+            cursor: pointer;
+        }
+    }
+}
+
+.gameHeaderDesktop {
+    max-width: 632px;
+    top: 13px;
+}
+
+.gameHeaderTablet {
+    max-width: 632px;
+    top: 30px;
+}
+
+.gameHeaderMobile {
+    max-width: 335px;
+    top: 50px;
 }

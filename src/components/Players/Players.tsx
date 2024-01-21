@@ -2,6 +2,8 @@ import scss from './Players.module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { ReactComponent as PlayerOne } from '../../assets/images/player-one.svg';
 import { ReactComponent as PlayerTwo } from '../../assets/images/player-two.svg';
+// import { ReactComponent as You } from '../../assets/images/you.svg';
+// import { ReactComponent as Cpu } from '../../assets/images/cpu.svg';
 
 export const Players = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -45,6 +47,7 @@ export const Players = () => {
         <div className={playerScoreStyle}>0</div>
         <div className={playerOneStyle}>
           <PlayerOne />
+          {/* <You /> */}
         </div>
       </div>
       <div className={playerStyles}>
@@ -52,6 +55,7 @@ export const Players = () => {
         <div className={playerScoreStyle}>0</div>
         <div className={playerTwoStyle}>
           <PlayerTwo />
+          {/* <Cpu /> */}
         </div>
       </div>
     </div>

@@ -24,13 +24,25 @@
         z-index: 300;
     }
 
+    &__marker {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 82px;
+    }
+
+    &__turn {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 191px;
+        height: 160px;
+        background-color: red;
+        z-index: 400;
+    }
 }
 
 .gameDesktop {
-
-    &__bottomBar {
-        height: 200px;
-    }
 
     &__board {
         position: absolute;
@@ -41,15 +53,14 @@
 
     &__bottomBar {
         height: 200px;
+    }
 
+    &__turn {
+        top: 660px;
     }
 }
 
 .gameTablet {
-
-    &__bottomBar {
-        height: 234px;
-    }
 
     &__board {
         position: absolute;
@@ -62,12 +73,13 @@
         height: 234px;
         top: 790px;
     }
+
+    &__turn {
+        top: 790px;
+    }
 }
 
 .gameMobile {
-    &__bottomBar {
-        height: 236px;
-    }
 
     &__board {
         position: absolute;
@@ -78,5 +90,9 @@
 
     &__bottomBar {
         height: 236px;
+    }
+
+    &__turn {
+        top: 566px;
     }
 }
