@@ -1,4 +1,3 @@
-import React from 'react';
 import scss from './Game.module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { Players } from '../Players/Players';
@@ -31,9 +30,14 @@ export const Game = () => {
     boardStyle += ` ${scss.gameDesktop__board}`;
   }
 
+  const handleMenuClick = () => {};
+  const handleRestartClick = () => {};
   return (
     <div className={gameStyle}>
-      <GameHeader />
+      <GameHeader
+        onClickMenu={handleMenuClick}
+        onClickRestart={handleRestartClick}
+      />
       <Players />
       <div className={`${boardStyle} ${scss.game__boardBlack}`}>
         {(isDesktop || isTablet) && <BoardBlackLarge />}

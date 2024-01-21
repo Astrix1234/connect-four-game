@@ -1,4 +1,3 @@
-import React from 'react';
 import scss from './Players.module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { ReactComponent as PlayerOne } from '../../assets/images/player-one.svg';

@@ -3,7 +3,15 @@ import scss from './GameHeader.module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 
-export const GameHeader = (onClickMenu, onClickRestart) => {
+type GameHeaderProps = {
+  onClickMenu: () => void;
+  onClickRestart: () => void;
+};
+
+export const GameHeader: React.FC<GameHeaderProps> = ({
+  onClickMenu,
+  onClickRestart,
+}) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
@@ -33,7 +41,7 @@ export const GameHeader = (onClickMenu, onClickRestart) => {
       <button
         type="button"
         className={scss.gameHeader__button}
-        onClick={onClickMenu}
+        onClick={onClickRestart}
       >
         RESTART
       </button>

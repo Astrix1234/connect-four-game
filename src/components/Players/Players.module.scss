@@ -1,6 +1,7 @@
 .players {
     display: flex;
     position: absolute;
+    z-index: 10;
 
     &__player {
         width: 100%;
@@ -24,7 +25,7 @@
     &__playerOne,
     &__playerTwo {
         position: absolute;
-        z-index: 10;
+        z-index: 20;
     }
 }
 

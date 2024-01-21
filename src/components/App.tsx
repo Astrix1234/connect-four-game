@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './Layout/Layout';

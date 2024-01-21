@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import scss from './StartWindow.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
