@@ -9,7 +9,13 @@ import { ReactComponent as BoardBlackLarge } from '../../assets/images/board-lay
 import { ReactComponent as BoardWhiteLarge } from '../../assets/images/board-layer-white-large.svg';
 import { ReactComponent as BoardBlackSmall } from '../../assets/images/board-layer-black-small.svg';
 import { ReactComponent as BoardWhiteSmall } from '../../assets/images/board-layer-white-small.svg';
+import { ReactComponent as TokenRedLarge } from '../../assets/images/counter-red-large.svg';
+import { ReactComponent as TokenRedSmall } from '../../assets/images/counter-red-small.svg';
+import { ReactComponent as TokenYellowLarge } from '../../assets/images/counter-yellow-large.svg';
+import { ReactComponent as TokenYellowSmall } from '../../assets/images/counter-yellow-small.svg';
 import { GameContext } from '../App';
+
+type Cell = null | 1 | 2;
 
 export const Game = () => {
   const { playerVsPlayer } = useContext(GameContext);
@@ -22,50 +28,38 @@ export const Game = () => {
   const [you, setYou] = useState(true);
   const initialMarkerPosition = 632 / 2;
   const [markerPosition, setMarkerPosition] = useState(initialMarkerPosition);
+  const [counter, setCounter] = useState(30);
 
-  const isMobile = useMediaQuery({ maxWidth: 768 });
-  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
-  const isDesktop = useMediaQuery({ minWidth: 1280 });
+  const ROWS = 6;
+  const COLUMNS = 7;
+  const initialBoard: Cell[][] = Array.from({ length: ROWS }, () =>
+    Array(COLUMNS).fill(null)
+  );
 
-  let gameStyle = scss.game;
-  let bottomBarStyle = scss.game__bottomBar;
-  let boardStyle = scss.game__board;
-  let turnStyle = scss.game__turn;
-  let winsStyle = scss.game__wins;
+  const [gameBoard, setGameBoard] = useState<Cell[][]>(initialBoard);
 
-  if (isMobile) {
-    gameStyle += ` ${scss.gameMobile}`;
-    bottomBarStyle += ` ${scss.gameMobile__bottomBar}`;
-    boardStyle += ` ${scss.gameMobile__board}`;
-    turnStyle += ` ${scss.gameMobile__turn}`;
-    winsStyle += ` ${scss.gameMobile__wins}`;
-  } else if (isTablet) {
-    gameStyle += ` ${scss.gameTablet}`;
-    bottomBarStyle += ` ${scss.gameTablet__bottomBar}`;
-    boardStyle += ` ${scss.gameTablet__board}`;
-    turnStyle += ` ${scss.gameTablet__turn}`;
-    winsStyle += ` ${scss.gameTablet__wins}`;
-  } else if (isDesktop) {
-    gameStyle += ` ${scss.gameDesktop}`;
-    bottomBarStyle += ` ${scss.gameDesktop__bottomBar}`;
-    boardStyle += ` ${scss.gameDesktop__board}`;
-    turnStyle += ` ${scss.gameDesktop__turn}`;
-    winsStyle += ` ${scss.gameDesktop__wins}`;
-  }
+  const cellWidthDesktop = 90.3;
+  const cellHeightDesktop = 87.7;
+  const cellWidthMobile = 47.9;
+  const cellHeightMobile = 51.7;
 
-  const turnClasses = `${turnStyle} ${
-    playerOne || you ? scss['game__turn-rose'] : scss['game__turn-yellow']
-  }`;
-  const markerClasses = `${scss.game__marker} ${
-    playerOne || you ? scss['game__marker-rose'] : scss['game__marker-yellow']
-  }`;
-  const bottomBarClasses = `${bottomBarStyle} ${
-    !game
-      ? winsPlayerOne || winsYou
-        ? scss['game__bottomBar-rose']
-        : scss['game__bottomBar-yellow']
-      : ''
-  }`;
+  const addTokenToColumn = (column: number, player: Cell) => {
+    const newBoard = [...gameBoard];
+    for (let row = ROWS - 1; row >= 0; row--) {
+      if (newBoard[row][column] === null) {
+        newBoard[row][column] = player;
+        break;
+      }
+    }
+    setGameBoard(newBoard);
+  };
+
+  const handleColumnClick = (columnIndex: number) => {
+    const currentPlayer = playerOne ? 1 : 2;
+    addTokenToColumn(columnIndex, currentPlayer);
+
+    setPlayerOne(!playerOne);
+  };
 
   const toggleMenuGame = useCallback(() => {
     setIsOpened(!isOpened);
@@ -151,6 +145,50 @@ export const Game = () => {
     };
   }, []);
 
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
+  const isDesktop = useMediaQuery({ minWidth: 1280 });
+
+  let gameStyle = scss.game;
+  let bottomBarStyle = scss.game__bottomBar;
+  let boardStyle = scss.game__board;
+  let turnStyle = scss.game__turn;
+  let winsStyle = scss.game__wins;
+
+  if (isMobile) {
+    gameStyle += ` ${scss.gameMobile}`;
+    bottomBarStyle += ` ${scss.gameMobile__bottomBar}`;
+    boardStyle += ` ${scss.gameMobile__board}`;
+    turnStyle += ` ${scss.gameMobile__turn}`;
+    winsStyle += ` ${scss.gameMobile__wins}`;
+  } else if (isTablet) {
+    gameStyle += ` ${scss.gameTablet}`;
+    bottomBarStyle += ` ${scss.gameTablet__bottomBar}`;
+    boardStyle += ` ${scss.gameTablet__board}`;
+    turnStyle += ` ${scss.gameTablet__turn}`;
+    winsStyle += ` ${scss.gameTablet__wins}`;
+  } else if (isDesktop) {
+    gameStyle += ` ${scss.gameDesktop}`;
+    bottomBarStyle += ` ${scss.gameDesktop__bottomBar}`;
+    boardStyle += ` ${scss.gameDesktop__board}`;
+    turnStyle += ` ${scss.gameDesktop__turn}`;
+    winsStyle += ` ${scss.gameDesktop__wins}`;
+  }
+
+  const turnClasses = `${turnStyle} ${
+    playerOne || you ? scss['game__turn-rose'] : scss['game__turn-yellow']
+  }`;
+  const markerClasses = `${scss.game__marker} ${
+    playerOne || you ? scss['game__marker-rose'] : scss['game__marker-yellow']
+  }`;
+  const bottomBarClasses = `${bottomBarStyle} ${
+    !game
+      ? winsPlayerOne || winsYou
+        ? scss['game__bottomBar-rose']
+        : scss['game__bottomBar-yellow']
+      : ''
+  }`;
+
   return (
     <>
       <div className={gameStyle}>
@@ -176,6 +214,52 @@ export const Game = () => {
             )}
             {(isDesktop || isTablet) && <BoardWhiteLarge />}
             {isMobile && <BoardWhiteSmall />}
+            {gameBoard.map((row, rowIndex) => (
+              <div
+                key={rowIndex}
+                style={{
+                  position: 'absolute',
+                  top: `${
+                    rowIndex * (isMobile ? cellHeightMobile : cellHeightDesktop)
+                  }px`,
+                  height: `${
+                    isMobile ? cellHeightMobile : cellHeightDesktop
+                  }px`,
+                  width: '100%',
+                }}
+              >
+                {row.map((cell, colIndex) => (
+                  <div
+                    key={colIndex}
+                    style={{
+                      position: 'absolute',
+                      left: `${
+                        colIndex *
+                        (isMobile ? cellWidthMobile : cellWidthDesktop)
+                      }px`,
+                      width: `${
+                        isMobile ? cellWidthMobile : cellWidthDesktop
+                      }px`,
+                      height: '100%',
+                    }}
+                    onClick={() => handleColumnClick(colIndex)}
+                  >
+                    {cell === 1 && (
+                      <div className={scss.game__token}>
+                        {isDesktop && <TokenRedLarge />}
+                        {isMobile && <TokenRedSmall />}
+                      </div>
+                    )}
+                    {cell === 2 && (
+                      <div className={scss.game__token}>
+                        {isDesktop && <TokenYellowLarge />}
+                        {isMobile && <TokenYellowSmall />}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
         {game ? (
@@ -189,7 +273,7 @@ export const Game = () => {
                 {you ? 'YOUR TURN' : 'CPU’S TURN'}
               </p>
             )}
-            <p className={scss.game__turnCounter}>30s</p>
+            <p className={scss.game__turnCounter}>{counter}s</p>
           </div>
         ) : (
           <div className={winsStyle}>
