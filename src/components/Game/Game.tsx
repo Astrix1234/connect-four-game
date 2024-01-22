@@ -20,6 +20,8 @@ export const Game = () => {
   const [winsYou, setWinsYou] = useState(true);
   const [playerOne, setPlayerOne] = useState(true);
   const [you, setYou] = useState(true);
+  const initialMarkerPosition = 632 / 2;
+  const [markerPosition, setMarkerPosition] = useState(initialMarkerPosition);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
@@ -118,6 +120,37 @@ export const Game = () => {
     navigate('/');
   };
 
+  const handleMouseMove = (event: MouseEvent) => {
+    const boardContainer = document.querySelector(
+      `.${scss.game__boardContainer}`
+    ) as HTMLElement;
+    const containerRect = boardContainer.getBoundingClientRect();
+    const containerStartX = containerRect.left;
+
+    const columnWidth = containerRect.width / 7;
+    const relativeMouseX = event.clientX - containerStartX;
+
+    const columnIndex = Math.floor(relativeMouseX / columnWidth);
+    const markerPosition = columnIndex * columnWidth + columnWidth / 2;
+    setMarkerPosition(markerPosition);
+  };
+
+  useEffect(() => {
+    const boardContainer = document.querySelector(
+      `.${scss.game__boardContainer}`
+    ) as HTMLElement;
+    if (boardContainer) {
+      boardContainer.addEventListener('mousemove', handleMouseMove);
+    } else {
+      console.error('Game container not found');
+    }
+    return () => {
+      if (boardContainer) {
+        boardContainer.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, []);
+
   return (
     <>
       <div className={gameStyle}>
@@ -126,14 +159,24 @@ export const Game = () => {
           onClickRestart={handleRestartClick}
         />
         <Players />
-        {isDesktop && <div className={markerClasses}></div>}
         <div className={`${boardStyle} ${scss.game__boardBlack}`}>
           {(isDesktop || isTablet) && <BoardBlackLarge />}
           {isMobile && <BoardBlackSmall />}
         </div>
         <div className={`${boardStyle} ${scss.game__boardWhite}`}>
-          {(isDesktop || isTablet) && <BoardWhiteLarge />}
-          {isMobile && <BoardWhiteSmall />}
+          <div className={scss.game__boardContainer}>
+            {isDesktop && (
+              <div
+                className={markerClasses}
+                style={{
+                  left: `${markerPosition}px`,
+                  transition: 'all 0.3s ease-in-out',
+                }}
+              ></div>
+            )}
+            {(isDesktop || isTablet) && <BoardWhiteLarge />}
+            {isMobile && <BoardWhiteSmall />}
+          </div>
         </div>
         {game ? (
           <div className={turnClasses}>

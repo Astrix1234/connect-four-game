@@ -32,11 +32,13 @@
         z-index: 300;
     }
 
+    &__boardContainer {
+        position: relative;
+    }
+
     &__marker {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        top: 82px;
+        transform: translate(- 50%, -100%);
         width: 38px;
         height: 36px;
     }
