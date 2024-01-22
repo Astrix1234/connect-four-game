@@ -1,5 +1,5 @@
 import scss from './Game.module.scss';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { Players } from '../Players/Players';
@@ -9,10 +9,17 @@ import { ReactComponent as BoardBlackLarge } from '../../assets/images/board-lay
 import { ReactComponent as BoardWhiteLarge } from '../../assets/images/board-layer-white-large.svg';
 import { ReactComponent as BoardBlackSmall } from '../../assets/images/board-layer-black-small.svg';
 import { ReactComponent as BoardWhiteSmall } from '../../assets/images/board-layer-white-small.svg';
+import { GameContext } from '../App';
 
 export const Game = () => {
+  const { playerVsPlayer } = useContext(GameContext);
   const [isOpened, setIsOpened] = useState(false);
   const navigate = useNavigate();
+  const [game, setGame] = useState(true);
+  const [winsPlayerOne, setWinsPlayerOne] = useState(true);
+  const [winsYou, setWinsYou] = useState(true);
+  const [playerOne, setPlayerOne] = useState(true);
+  const [you, setYou] = useState(true);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
@@ -43,6 +50,20 @@ export const Game = () => {
     turnStyle += ` ${scss.gameDesktop__turn}`;
     winsStyle += ` ${scss.gameDesktop__wins}`;
   }
+
+  const turnClasses = `${turnStyle} ${
+    playerOne || you ? scss['game__turn-rose'] : scss['game__turn-yellow']
+  }`;
+  const markerClasses = `${scss.game__marker} ${
+    playerOne || you ? scss['game__marker-rose'] : scss['game__marker-yellow']
+  }`;
+  const bottomBarClasses = `${bottomBarStyle} ${
+    !game
+      ? winsPlayerOne || winsYou
+        ? scss['game__bottomBar-rose']
+        : scss['game__bottomBar-yellow']
+      : ''
+  }`;
 
   const toggleMenuGame = useCallback(() => {
     setIsOpened(!isOpened);
@@ -79,7 +100,9 @@ export const Game = () => {
   }`;
 
   const handleRestartClick = () => {};
-  const handlePlayAgainClick = () => {};
+  const handlePlayAgainClick = () => {
+    setGame(true);
+  };
 
   const handleRestart = () => {
     toggleMenuGame();
@@ -103,7 +126,7 @@ export const Game = () => {
           onClickRestart={handleRestartClick}
         />
         <Players />
-        {isDesktop && <div className={scss.game__marker}></div>}
+        {isDesktop && <div className={markerClasses}></div>}
         <div className={`${boardStyle} ${scss.game__boardBlack}`}>
           {(isDesktop || isTablet) && <BoardBlackLarge />}
           {isMobile && <BoardBlackSmall />}
@@ -112,22 +135,39 @@ export const Game = () => {
           {(isDesktop || isTablet) && <BoardWhiteLarge />}
           {isMobile && <BoardWhiteSmall />}
         </div>
-        <div className={turnStyle}>
-          <p className={scss.game__turnText}>PLAYER 1’S TURN</p>
-          <p className={scss.game__turnCounter}>30s</p>
-        </div>
-        <div className={winsStyle}>
-          <p className={scss.game__winsPlayer}>PLAYER 1</p>
-          <p className={scss.game__winsWins}>WINS</p>
-          <button
-            type="button"
-            className={scss.game__winsButton}
-            onClick={handlePlayAgainClick}
-          >
-            PLAY AGAIN
-          </button>
-        </div>
-        <div className={bottomBarStyle}></div>
+        {game ? (
+          <div className={turnClasses}>
+            {playerVsPlayer ? (
+              <p className={scss.game__turnText}>
+                {playerOne ? 'PLAYER 1’S TURN' : 'PLAYER 2’S TURN'}
+              </p>
+            ) : (
+              <p className={scss.game__turnText}>
+                {you ? 'YOUR TURN' : 'CPU’S TURN'}
+              </p>
+            )}
+            <p className={scss.game__turnCounter}>30s</p>
+          </div>
+        ) : (
+          <div className={winsStyle}>
+            {playerVsPlayer ? (
+              <p className={scss.game__winsPlayer}>
+                {winsPlayerOne ? 'PLAYER 1' : 'PLAYER 2'}
+              </p>
+            ) : (
+              <p className={scss.game__winsPlayer}>{winsYou ? 'YOU' : 'CPU'}</p>
+            )}
+            <p className={scss.game__winsWins}>WINS</p>
+            <button
+              type="button"
+              className={scss.game__winsButton}
+              onClick={handlePlayAgainClick}
+            >
+              PLAY AGAIN
+            </button>
+          </div>
+        )}
+        <div className={bottomBarClasses}></div>
       </div>
       <div
         className={backgroundMenuClasses}

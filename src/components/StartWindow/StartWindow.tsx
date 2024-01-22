@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import scss from './StartWindow.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
@@ -8,10 +8,12 @@ import { ReactComponent as PlayerVsPlayer } from '../../assets/images/player-vs-
 import { ReactComponent as Logo } from '../../assets/images/logo.svg';
 import { ReactComponent as IconCheck } from '../../assets/images/icon-check.svg';
 import { ReactComponent as IconCheckHover } from '../../assets/images/icon-check-hover.svg';
+import { GameContext } from '../App';
 
 export const StartWindow = () => {
   const [isOpened, setIsOpened] = useState(false);
   const navigate = useNavigate();
+  const { setPlayerVsPlayer } = useContext(GameContext);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTabletDesktop = useMediaQuery({ minWidth: 769 });
@@ -38,7 +40,13 @@ export const StartWindow = () => {
     setIsOpened(!isOpened);
   };
 
-  const handlePlay = () => {
+  const handlePlayVsPlayer = () => {
+    setPlayerVsPlayer(true);
+    navigate('/game');
+  };
+
+  const handlePlayVsCpu = () => {
+    setPlayerVsPlayer(false);
     navigate('/game');
   };
 
@@ -53,13 +61,13 @@ export const StartWindow = () => {
             text="PLAY VS CPU"
             icon={<PlayerVsCpu />}
             classes={scss.startWindow__vsCpu}
-            onClick={handlePlay}
+            onClick={handlePlayVsCpu}
           />
           <Buttons
             text="PLAY VS PLAYER"
             icon={<PlayerVsPlayer />}
             classes={scss.startWindow__vsPlayer}
-            onClick={handlePlay}
+            onClick={handlePlayVsPlayer}
           />
           <Buttons text="GAME RULES" onClick={handleGameRulesToggle} />
         </div>

@@ -22,6 +22,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     'react/prop-types': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   settings: {
     react: {

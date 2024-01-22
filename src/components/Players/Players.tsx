@@ -1,11 +1,15 @@
+import { useContext } from 'react';
 import scss from './Players.module.scss';
 import { useMediaQuery } from 'react-responsive';
 import { ReactComponent as PlayerOne } from '../../assets/images/player-one.svg';
 import { ReactComponent as PlayerTwo } from '../../assets/images/player-two.svg';
-// import { ReactComponent as You } from '../../assets/images/you.svg';
-// import { ReactComponent as Cpu } from '../../assets/images/cpu.svg';
+import { ReactComponent as You } from '../../assets/images/you.svg';
+import { ReactComponent as Cpu } from '../../assets/images/cpu.svg';
+import { GameContext } from '../App';
 
 export const Players = () => {
+  const { playerVsPlayer } = useContext(GameContext);
+
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
   const isDesktop = useMediaQuery({ minWidth: 1280 });
@@ -43,19 +47,21 @@ export const Players = () => {
   return (
     <div className={playersStyles}>
       <div className={playerStyles}>
-        <div className={playerNameStyle}>PLAYER 1</div>
+        <div className={playerNameStyle}>
+          {playerVsPlayer ? 'PLAYER 1' : 'YOU'}
+        </div>
         <div className={playerScoreStyle}>0</div>
         <div className={playerOneStyle}>
-          <PlayerOne />
-          {/* <You /> */}
+          {playerVsPlayer ? <PlayerOne /> : <You />}
         </div>
       </div>
       <div className={playerStyles}>
-        <div className={playerNameStyle}>PLAYER 2</div>
+        <div className={playerNameStyle}>
+          {playerVsPlayer ? 'PLAYER 2' : 'CPU'}
+        </div>
         <div className={playerScoreStyle}>0</div>
         <div className={playerTwoStyle}>
-          <PlayerTwo />
-          {/* <Cpu /> */}
+          {playerVsPlayer ? <PlayerTwo /> : <Cpu />}
         </div>
       </div>
     </div>
