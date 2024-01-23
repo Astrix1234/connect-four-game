@@ -9,7 +9,7 @@
         width: 100%;
         background-color: var(--dark-blue);
         border-radius: 60px 60px 0px 0px;
-        bottom: 0;
+        height: 100%;
     }
 
     &__bottomBar-rose {
@@ -138,21 +138,21 @@
 
     &__board {
         position: absolute;
-        top: 116px;
+        top: 156px;
         left: 50%;
         transform: translate(-50%, 0);
     }
 
     &__bottomBar {
-        height: 200px;
+        top: 700px;
     }
 
     &__turn {
-        top: 660px;
+        top: 700px;
     }
 
     &__wins {
-        top: 660px;
+        top: 700px;
     }
 }
 
@@ -160,21 +160,21 @@
 
     &__board {
         position: absolute;
-        top: 231px;
+        top: 246px;
         left: 50%;
         transform: translate(-50%, 0);
     }
 
     &__bottomBar {
-        height: 234px;
+        top: 790px;
     }
 
     &__turn {
-        top: 775px;
+        top: 790px;
     }
 
     &__wins {
-        top: 775px;
+        top: 790px;
     }
 }
 
@@ -188,7 +188,7 @@
     }
 
     &__bottomBar {
-        height: 236px;
+        top: 546px;
     }
 
     &__turn {

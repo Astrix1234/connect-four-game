@@ -22,6 +22,7 @@ export const Game = () => {
   const [isOpened, setIsOpened] = useState(false);
   const navigate = useNavigate();
   const [game, setGame] = useState(true);
+  /* eslint-disable */
   const [winsPlayerOne, setWinsPlayerOne] = useState(true);
   const [winsYou, setWinsYou] = useState(true);
   const [playerOne, setPlayerOne] = useState(true);
@@ -29,6 +30,7 @@ export const Game = () => {
   const initialMarkerPosition = 632 / 2;
   const [markerPosition, setMarkerPosition] = useState(initialMarkerPosition);
   const [counter, setCounter] = useState(30);
+  /* eslint-disable */
 
   const ROWS = 6;
   const COLUMNS = 7;
@@ -238,13 +240,13 @@ export const Game = () => {
                   >
                     {cell === 1 && (
                       <div>
-                        {isDesktop && <TokenRedLarge />}
+                        {(isDesktop || isTablet) && <TokenRedLarge />}
                         {isMobile && <TokenRedSmall />}
                       </div>
                     )}
                     {cell === 2 && (
                       <div>
-                        {isDesktop && <TokenYellowLarge />}
+                        {(isDesktop || isTablet) && <TokenYellowLarge />}
                         {isMobile && <TokenYellowSmall />}
                       </div>
                     )}
