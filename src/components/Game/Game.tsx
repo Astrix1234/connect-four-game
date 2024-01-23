@@ -38,11 +38,6 @@ export const Game = () => {
 
   const [gameBoard, setGameBoard] = useState<Cell[][]>(initialBoard);
 
-  const cellWidthDesktop = 90.3;
-  const cellHeightDesktop = 87.7;
-  const cellWidthMobile = 47.9;
-  const cellHeightMobile = 51.7;
-
   const addTokenToColumn = (column: number, player: Cell) => {
     const newBoard = [...gameBoard];
     for (let row = ROWS - 1; row >= 0; row--) {
@@ -217,41 +212,38 @@ export const Game = () => {
             {gameBoard.map((row, rowIndex) => (
               <div
                 key={rowIndex}
+                className={scss.game__token}
                 style={{
                   position: 'absolute',
-                  top: `${
-                    rowIndex * (isMobile ? cellHeightMobile : cellHeightDesktop)
-                  }px`,
-                  height: `${
-                    isMobile ? cellHeightMobile : cellHeightDesktop
-                  }px`,
+                  top: isMobile
+                    ? `${6 + rowIndex * (41 + 6)}px`
+                    : `${17 + rowIndex * (70 + 18)}px`,
+                  height: `${isMobile ? 41 : 70}px`,
                   width: '100%',
                 }}
               >
                 {row.map((cell, colIndex) => (
                   <div
                     key={colIndex}
+                    className={scss.game__token}
                     style={{
                       position: 'absolute',
-                      left: `${
-                        colIndex *
-                        (isMobile ? cellWidthMobile : cellWidthDesktop)
-                      }px`,
-                      width: `${
-                        isMobile ? cellWidthMobile : cellWidthDesktop
-                      }px`,
+                      left: isMobile
+                        ? `${5.5 + colIndex * (41 + 6)}px`
+                        : `${17 + colIndex * (70 + 18)}px`,
+                      width: `${isMobile ? 41 : 70}px`,
                       height: '100%',
                     }}
                     onClick={() => handleColumnClick(colIndex)}
                   >
                     {cell === 1 && (
-                      <div className={scss.game__token}>
+                      <div>
                         {isDesktop && <TokenRedLarge />}
                         {isMobile && <TokenRedSmall />}
                       </div>
                     )}
                     {cell === 2 && (
-                      <div className={scss.game__token}>
+                      <div>
                         {isDesktop && <TokenYellowLarge />}
                         {isMobile && <TokenYellowSmall />}
                       </div>

@@ -32,6 +32,10 @@
         z-index: 300;
     }
 
+    &__token {
+        z-index: 0;
+    }
+
     &__boardContainer {
         position: relative;
     }
