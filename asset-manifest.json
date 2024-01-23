@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/connect-four-game/static/css/main.46988858.css",
-    "main.js": "/connect-four-game/static/js/main.209a4569.js",
+    "main.js": "/connect-four-game/static/js/main.34c6c2c6.js",
     "static/css/476.abc724d1.chunk.css": "/connect-four-game/static/css/476.abc724d1.chunk.css",
-    "static/js/476.1984116f.chunk.js": "/connect-four-game/static/js/476.1984116f.chunk.js",
-    "static/css/760.650b1be0.chunk.css": "/connect-four-game/static/css/760.650b1be0.chunk.css",
-    "static/js/760.6fbefead.chunk.js": "/connect-four-game/static/js/760.6fbefead.chunk.js",
+    "static/js/476.09cf569e.chunk.js": "/connect-four-game/static/js/476.09cf569e.chunk.js",
+    "static/css/56.478f7498.chunk.css": "/connect-four-game/static/css/56.478f7498.chunk.css",
+    "static/js/56.d8a2f9a4.chunk.js": "/connect-four-game/static/js/56.d8a2f9a4.chunk.js",
     "static/js/787.7fde292d.chunk.js": "/connect-four-game/static/js/787.7fde292d.chunk.js",
     "static/js/805.56339535.chunk.js": "/connect-four-game/static/js/805.56339535.chunk.js",
     "static/media/board-layer-black-small.svg": "/connect-four-game/static/media/board-layer-black-small.42afffd73e45d00ba497d42094c95366.svg",
@@ -15,24 +15,32 @@
     "static/media/player-vs-player.svg": "/connect-four-game/static/media/player-vs-player.0f4120171bf670fca99a7e7099d547d0.svg",
     "static/media/player-vs-cpu.svg": "/connect-four-game/static/media/player-vs-cpu.c864805caf4d283a8c1f506a4b7452a5.svg",
     "static/media/logo.svg": "/connect-four-game/static/media/logo.18f406c1e091b7f33f727e65e6a8cf5b.svg",
+    "static/media/counter-red-small.svg": "/connect-four-game/static/media/counter-red-small.ebb6f102699bb8bd27557295c4b12490.svg",
     "static/media/turn-background-red.svg": "/connect-four-game/static/media/turn-background-red.a17013f69456193c4ebc.svg",
+    "static/media/counter-yellow-small.svg": "/connect-four-game/static/media/counter-yellow-small.28a64a8cf4c3f9abb40b909ebe7cd8d3.svg",
+    "static/media/counter-yellow-large.svg": "/connect-four-game/static/media/counter-yellow-large.f7e047b0e89b59153893ff1391a20973.svg",
+    "static/media/counter-red-large.svg": "/connect-four-game/static/media/counter-red-large.660c2bf877150e5a3430479adf62bb45.svg",
     "static/media/player-two.svg": "/connect-four-game/static/media/player-two.3808ca69d8458efbdca19bd10962ae09.svg",
+    "static/media/cpu.svg": "/connect-four-game/static/media/cpu.7221667e8e44311ff9a0b7fca4e4543b.svg",
+    "static/media/you.svg": "/connect-four-game/static/media/you.e0bfcc966c7d17e5c5dfa7950b98111b.svg",
+    "static/media/turn-background-yellow.svg": "/connect-four-game/static/media/turn-background-yellow.542520d67124db0b4558.svg",
     "index.html": "/connect-four-game/index.html",
     "static/media/player-one.svg": "/connect-four-game/static/media/player-one.dddd4c6dd39939e6572b23602ed52bf8.svg",
     "static/media/marker-red.svg": "/connect-four-game/static/media/marker-red.201fc49ae1d8753513ae.svg",
+    "static/media/marker-yellow.svg": "/connect-four-game/static/media/marker-yellow.a8ee5c49c251b26a543f.svg",
     "static/media/icon-check-hover.svg": "/connect-four-game/static/media/icon-check-hover.30a3e789fd707b5656b0c6fae97b002d.svg",
     "static/media/icon-check.svg": "/connect-four-game/static/media/icon-check.09edb9dc6d34aac5a1b039e28520070b.svg",
     "main.46988858.css.map": "/connect-four-game/static/css/main.46988858.css.map",
-    "main.209a4569.js.map": "/connect-four-game/static/js/main.209a4569.js.map",
+    "main.34c6c2c6.js.map": "/connect-four-game/static/js/main.34c6c2c6.js.map",
     "476.abc724d1.chunk.css.map": "/connect-four-game/static/css/476.abc724d1.chunk.css.map",
-    "476.1984116f.chunk.js.map": "/connect-four-game/static/js/476.1984116f.chunk.js.map",
-    "760.650b1be0.chunk.css.map": "/connect-four-game/static/css/760.650b1be0.chunk.css.map",
-    "760.6fbefead.chunk.js.map": "/connect-four-game/static/js/760.6fbefead.chunk.js.map",
+    "476.09cf569e.chunk.js.map": "/connect-four-game/static/js/476.09cf569e.chunk.js.map",
+    "56.478f7498.chunk.css.map": "/connect-four-game/static/css/56.478f7498.chunk.css.map",
+    "56.d8a2f9a4.chunk.js.map": "/connect-four-game/static/js/56.d8a2f9a4.chunk.js.map",
     "787.7fde292d.chunk.js.map": "/connect-four-game/static/js/787.7fde292d.chunk.js.map",
     "805.56339535.chunk.js.map": "/connect-four-game/static/js/805.56339535.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.46988858.css",
-    "static/js/main.209a4569.js"
+    "static/js/main.34c6c2c6.js"
   ]
 }
