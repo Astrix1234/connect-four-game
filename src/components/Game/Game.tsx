@@ -22,15 +22,17 @@ export const Game = () => {
   const [isOpened, setIsOpened] = useState(false);
   const navigate = useNavigate();
   const [game, setGame] = useState(true);
-  /* eslint-disable */
-  const [winsPlayerOne, setWinsPlayerOne] = useState(true);
-  const [winsYou, setWinsYou] = useState(true);
+  const [winsPlayerOne, setWinsPlayerOne] = useState(false);
+  const [winsYou, setWinsYou] = useState(false);
   const [playerOne, setPlayerOne] = useState(true);
   const [you, setYou] = useState(true);
   const initialMarkerPosition = 632 / 2;
   const [markerPosition, setMarkerPosition] = useState(initialMarkerPosition);
-  const [counter, setCounter] = useState(30);
-  /* eslint-disable */
+  const [counter, setCounter] = useState(10);
+  const [pointsPlayerOne, setPointsPlayerOne] = useState(0);
+  const [pointsPlayerTwo, setPointsPlayerTwo] = useState(0);
+  const [pointsYou, setPointsYou] = useState(0);
+  const [pointsCpu, setPointsCpu] = useState(0);
 
   const ROWS = 6;
   const COLUMNS = 7;
@@ -51,11 +53,63 @@ export const Game = () => {
     setGameBoard(newBoard);
   };
 
+  const getCurrentPlayer = () => {
+    if (playerVsPlayer) {
+      return playerOne ? 1 : 2;
+    } else {
+      return you ? 1 : 2;
+    }
+  };
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout | number;
+
+    if (!isOpened && game) {
+      timerId = setInterval(() => {
+        setCounter(prevCounter => (prevCounter > 0 ? prevCounter - 1 : 0));
+      }, 1000);
+    }
+
+    return () => {
+      if (timerId) clearInterval(timerId);
+    };
+  }, [isOpened, game]);
+
+  useEffect(() => {
+    if (counter === 0) {
+      if (playerVsPlayer) {
+        setWinsPlayerOne(!playerOne);
+        if (playerOne) {
+          setPointsPlayerTwo(prevPoints => prevPoints + 1);
+        } else {
+          setPointsPlayerOne(prevPoints => prevPoints + 1);
+        }
+      } else {
+        setWinsYou(!you);
+        if (you) {
+          setPointsCpu(prevPoints => prevPoints + 1);
+        } else {
+          setPointsYou(prevPoints => prevPoints + 1);
+        }
+      }
+      setGame(false);
+    }
+  }, [counter, playerOne, you, playerVsPlayer]);
+
   const handleColumnClick = (columnIndex: number) => {
-    const currentPlayer = playerOne ? 1 : 2;
+    const currentPlayer = getCurrentPlayer();
     addTokenToColumn(columnIndex, currentPlayer);
 
-    setPlayerOne(!playerOne);
+    if (playerVsPlayer) {
+      setPlayerOne(!playerOne);
+    } else {
+      setYou(!you);
+    }
+    resetCounter();
+  };
+
+  const resetCounter = () => {
+    setCounter(10);
   };
 
   const toggleMenuGame = useCallback(() => {
@@ -88,13 +142,13 @@ export const Game = () => {
     };
   }, [isOpened, toggleMenuGame]);
 
-  const backgroundMenuClasses = `${scss.backgroundMenu} ${
-    !isOpened ? scss['is-hidden'] : ''
-  }`;
-
   const handleRestartClick = () => {};
+
   const handlePlayAgainClick = () => {
+    setCounter(10);
     setGame(true);
+    setWinsPlayerOne(false);
+    setWinsYou(false);
   };
 
   const handleRestart = () => {
@@ -130,17 +184,15 @@ export const Game = () => {
     const boardContainer = document.querySelector(
       `.${scss.game__boardContainer}`
     ) as HTMLElement;
-    if (boardContainer) {
+    if (boardContainer && game) {
       boardContainer.addEventListener('mousemove', handleMouseMove);
-    } else {
-      console.error('Game container not found');
     }
     return () => {
       if (boardContainer) {
         boardContainer.removeEventListener('mousemove', handleMouseMove);
       }
     };
-  }, []);
+  }, [game]);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isTablet = useMediaQuery({ minWidth: 769, maxWidth: 1279 });
@@ -173,11 +225,18 @@ export const Game = () => {
   }
 
   const turnClasses = `${turnStyle} ${
-    playerOne || you ? scss['game__turn-rose'] : scss['game__turn-yellow']
+    playerOne ? scss['game__turn-rose'] : scss['game__turn-yellow']
   }`;
+  const cpuTurnClasses = you
+    ? scss['game__turn-rose']
+    : scss['game__turn-yellow'];
+
   const markerClasses = `${scss.game__marker} ${
-    playerOne || you ? scss['game__marker-rose'] : scss['game__marker-yellow']
+    playerOne ? scss['game__marker-rose'] : scss['game__marker-yellow']
   }`;
+  const cpuMarkerClasses = you
+    ? scss['game__marker-rose']
+    : scss['game__marker-yellow'];
   const bottomBarClasses = `${bottomBarStyle} ${
     !game
       ? winsPlayerOne || winsYou
@@ -186,6 +245,19 @@ export const Game = () => {
       : ''
   }`;
 
+  const backgroundMenuClasses = `${scss.backgroundMenu} ${
+    !isOpened ? scss['is-hidden'] : ''
+  }`;
+
+  const getDynamicStyle = (finalTop: string) => {
+    return {
+      position: 'absolute',
+      width: `${isMobile ? 41 : 70}px`,
+      height: '100%',
+      '--final-top': finalTop,
+    };
+  };
+
   return (
     <>
       <div className={gameStyle}>
@@ -193,71 +265,93 @@ export const Game = () => {
           onClickMenu={handleMenuClick}
           onClickRestart={handleRestartClick}
         />
-        <Players />
-        <div className={`${boardStyle} ${scss.game__boardBlack}`}>
-          {(isDesktop || isTablet) && <BoardBlackLarge />}
-          {isMobile && <BoardBlackSmall />}
-        </div>
-        <div className={`${boardStyle} ${scss.game__boardWhite}`}>
+        <Players
+          pointsPlayerOne={pointsPlayerOne}
+          pointsPlayerTwo={pointsPlayerTwo}
+          pointsYou={pointsYou}
+          pointsCpu={pointsCpu}
+        />
+        <div className={boardStyle}>
           <div className={scss.game__boardContainer}>
             {isDesktop && (
               <div
-                className={markerClasses}
+                className={`${markerClasses} ${cpuMarkerClasses}`}
                 style={{
                   left: `${markerPosition}px`,
                   transition: 'all 0.3s ease-in-out',
                 }}
               ></div>
             )}
-            {(isDesktop || isTablet) && <BoardWhiteLarge />}
-            {isMobile && <BoardWhiteSmall />}
-            {gameBoard.map((row, rowIndex) => (
-              <div
-                key={rowIndex}
-                className={scss.game__token}
-                style={{
-                  position: 'absolute',
-                  top: isMobile
-                    ? `${6 + rowIndex * (41 + 6)}px`
-                    : `${17 + rowIndex * (70 + 18)}px`,
-                  height: `${isMobile ? 41 : 70}px`,
-                  width: '100%',
-                }}
-              >
-                {row.map((cell, colIndex) => (
+            <div className={scss.game__boardBlack}>
+              {(isDesktop || isTablet) && <BoardBlackLarge />}
+              {isMobile && <BoardBlackSmall />}
+            </div>
+            <div className={scss.game__rc}>
+              {gameBoard.map((row, rowIndex) => {
+                const finalTopDesktop = `${17 + rowIndex * (70 + 18)}px`;
+                const finalTopMobile = `${6 + rowIndex * (41 + 6)}px`;
+
+                return (
                   <div
-                    key={colIndex}
+                    key={rowIndex}
                     className={scss.game__token}
                     style={{
                       position: 'absolute',
-                      left: isMobile
-                        ? `${5.5 + colIndex * (41 + 6)}px`
-                        : `${17 + colIndex * (70 + 18)}px`,
-                      width: `${isMobile ? 41 : 70}px`,
-                      height: '100%',
+                      top: isMobile ? finalTopMobile : finalTopDesktop,
+                      height: `${isMobile ? 41 : 70}px`,
+                      width: '100%',
                     }}
-                    onClick={() => handleColumnClick(colIndex)}
                   >
-                    {cell === 1 && (
-                      <div>
-                        {(isDesktop || isTablet) && <TokenRedLarge />}
-                        {isMobile && <TokenRedSmall />}
-                      </div>
-                    )}
-                    {cell === 2 && (
-                      <div>
-                        {(isDesktop || isTablet) && <TokenYellowLarge />}
-                        {isMobile && <TokenYellowSmall />}
-                      </div>
-                    )}
+                    {row.map((cell, colIndex) => {
+                      const finalTop = isMobile
+                        ? finalTopMobile
+                        : finalTopDesktop;
+                      const dynamicStyle = getDynamicStyle(finalTop);
+
+                      return (
+                        <div
+                          key={colIndex}
+                          className={`${scss.game__token} ${
+                            cell !== null ? scss.tokenDropAnimation : ''
+                          }`}
+                          style={{
+                            ...dynamicStyle,
+                            left: isMobile
+                              ? `${6 + colIndex * (41 + 5.9)}px`
+                              : `${17 + colIndex * (70 + 18)}px`,
+                            position: 'absolute' as const,
+                          }}
+                          onClick={() => {
+                            if (game) handleColumnClick(colIndex);
+                          }}
+                        >
+                          {cell === 1 && (
+                            <div>
+                              {(isDesktop || isTablet) && <TokenRedLarge />}
+                              {isMobile && <TokenRedSmall />}
+                            </div>
+                          )}
+                          {cell === 2 && (
+                            <div>
+                              {(isDesktop || isTablet) && <TokenYellowLarge />}
+                              {isMobile && <TokenYellowSmall />}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
-            ))}
+                );
+              })}
+            </div>
+            <div className={scss.game__boardWhite}>
+              {(isDesktop || isTablet) && <BoardWhiteLarge />}
+              {isMobile && <BoardWhiteSmall />}
+            </div>
           </div>
         </div>
         {game ? (
-          <div className={turnClasses}>
+          <div className={`${turnClasses} ${cpuTurnClasses}`}>
             {playerVsPlayer ? (
               <p className={scss.game__turnText}>
                 {playerOne ? 'PLAYER 1’S TURN' : 'PLAYER 2’S TURN'}

@@ -7,7 +7,19 @@ import { ReactComponent as You } from '../../assets/images/you.svg';
 import { ReactComponent as Cpu } from '../../assets/images/cpu.svg';
 import { GameContext } from '../App';
 
-export const Players = () => {
+interface PlayersProps {
+  pointsPlayerOne: number;
+  pointsPlayerTwo: number;
+  pointsYou: number;
+  pointsCpu: number;
+}
+
+export const Players: React.FC<PlayersProps> = ({
+  pointsPlayerOne,
+  pointsPlayerTwo,
+  pointsYou,
+  pointsCpu,
+}) => {
   const { playerVsPlayer } = useContext(GameContext);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -50,7 +62,9 @@ export const Players = () => {
         <div className={playerNameStyle}>
           {playerVsPlayer ? 'PLAYER 1' : 'YOU'}
         </div>
-        <div className={playerScoreStyle}>0</div>
+        <div className={playerScoreStyle}>
+          {playerVsPlayer ? pointsPlayerOne : pointsYou}
+        </div>
         <div className={playerOneStyle}>
           {playerVsPlayer ? <PlayerOne /> : <You />}
         </div>
@@ -59,7 +73,10 @@ export const Players = () => {
         <div className={playerNameStyle}>
           {playerVsPlayer ? 'PLAYER 2' : 'CPU'}
         </div>
-        <div className={playerScoreStyle}>0</div>
+        <div className={playerScoreStyle}>
+          {' '}
+          {playerVsPlayer ? pointsPlayerTwo : pointsCpu}
+        </div>
         <div className={playerTwoStyle}>
           {playerVsPlayer ? <PlayerTwo /> : <Cpu />}
         </div>
