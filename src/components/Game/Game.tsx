@@ -38,56 +38,62 @@ export const Game = () => {
   const ROWS = 6;
   const COLUMNS = 7;
 
-  const checkLine = (
-    board: Cell[][],
-    startRow: number,
-    startCol: number,
-    deltaRow: number,
-    deltaCol: number,
-    player: Cell
-  ): { row: number; col: number }[] | null => {
-    let tokens = [];
-    let r = startRow,
-      c = startCol;
+  const checkLine = useCallback(
+    (
+      board: Cell[][],
+      startRow: number,
+      startCol: number,
+      deltaRow: number,
+      deltaCol: number,
+      player: Cell
+    ): { row: number; col: number }[] | null => {
+      let tokens = [];
+      let r = startRow,
+        c = startCol;
 
-    while (r >= 0 && r < ROWS && c >= 0 && c < COLUMNS) {
-      if (board[r][c] === player) {
-        tokens.push({ row: r, col: c });
-        if (tokens.length === 4) {
-          return tokens;
+      while (r >= 0 && r < ROWS && c >= 0 && c < COLUMNS) {
+        if (board[r][c] === player) {
+          tokens.push({ row: r, col: c });
+          if (tokens.length === 4) {
+            return tokens;
+          }
+        } else {
+          tokens = [];
         }
-      } else {
-        tokens = [];
+        r += deltaRow;
+        c += deltaCol;
       }
-      r += deltaRow;
-      c += deltaCol;
-    }
 
-    return null;
-  };
+      return null;
+    },
+    [ROWS, COLUMNS]
+  );
 
-  const checkForAdjacentTokens = (
-    board: Cell[][],
-    row: number,
-    col: number,
-    player: Cell
-  ): { row: number; col: number }[] | null => {
-    let tokens = checkLine(board, row, Math.max(0, col - 3), 0, 1, player);
-    if (tokens) return tokens;
-
-    tokens = checkLine(board, Math.max(0, row - 3), col, 1, 0, player);
-    if (tokens) return tokens;
-
-    for (let i = -3; i <= 3; i++) {
-      tokens = checkLine(board, row + i, col + i, 1, 1, player);
+  const checkForAdjacentTokens = useCallback(
+    (
+      board: Cell[][],
+      row: number,
+      col: number,
+      player: Cell
+    ): { row: number; col: number }[] | null => {
+      let tokens = checkLine(board, row, Math.max(0, col - 3), 0, 1, player);
       if (tokens) return tokens;
 
-      tokens = checkLine(board, row + i, col - i, 1, -1, player);
+      tokens = checkLine(board, Math.max(0, row - 3), col, 1, 0, player);
       if (tokens) return tokens;
-    }
 
-    return null;
-  };
+      for (let i = -3; i <= 3; i++) {
+        tokens = checkLine(board, row + i, col + i, 1, 1, player);
+        if (tokens) return tokens;
+
+        tokens = checkLine(board, row + i, col - i, 1, -1, player);
+        if (tokens) return tokens;
+      }
+
+      return null;
+    },
+    [checkLine]
+  );
   const initialBoard: Cell[][] = Array.from({ length: ROWS }, () =>
     Array(COLUMNS).fill(null)
   );
@@ -98,36 +104,47 @@ export const Game = () => {
   >([]);
   const [gameOver, setGameOver] = useState(false);
 
-  const addTokenToColumn = (column: number, player: Cell) => {
-    const newBoard = [...gameBoard];
-    let addedRow = -1;
-    for (let row = ROWS - 1; row >= 0; row--) {
-      if (newBoard[row][column] === null) {
-        newBoard[row][column] = player;
-        addedRow = row;
-        break;
+  const addTokenToColumn = useCallback(
+    (column: number, player: Cell) => {
+      const newBoard = [...gameBoard];
+      let addedRow = -1;
+      for (let row = ROWS - 1; row >= 0; row--) {
+        if (newBoard[row][column] === null) {
+          newBoard[row][column] = player;
+          addedRow = row;
+          break;
+        }
       }
-    }
 
-    if (addedRow !== -1) {
-      const winningSequence = checkForAdjacentTokens(
-        newBoard,
-        addedRow,
-        column,
-        player
+      if (addedRow !== -1) {
+        const winningSequence = checkForAdjacentTokens(
+          newBoard,
+          addedRow,
+          column,
+          player
+        );
+        if (winningSequence) {
+          setWinningTokens(winningSequence);
+          setGameOver(true);
+          if (player === 1) {
+            setWinsYou(true);
+          } else if (player === 2) {
+            setWinsPlayerOne(true);
+          }
+          return;
+        }
+      }
+
+      setGameBoard(newBoard);
+      const isBoardFull = newBoard.every(row =>
+        row.every(cell => cell !== null)
       );
-      if (winningSequence) {
-        setWinningTokens(winningSequence);
-        setGameOver(true);
+      if (isBoardFull) {
+        setDraw(true);
       }
-    }
-
-    setGameBoard(newBoard);
-    const isBoardFull = newBoard.every(row => row.every(cell => cell !== null));
-    if (isBoardFull) {
-      setDraw(true);
-    }
-  };
+    },
+    [gameBoard, ROWS, checkForAdjacentTokens]
+  );
 
   useEffect(() => {
     if (draw) {
@@ -178,7 +195,35 @@ export const Game = () => {
     }
   }, [counter, playerOne, you, playerVsPlayer, gameOver]);
 
+  const computerMove = useCallback(() => {
+    if (gameOver || draw) {
+      return;
+    }
+
+    let columnIndex;
+    do {
+      columnIndex = Math.floor(Math.random() * COLUMNS);
+    } while (gameBoard[0][columnIndex] !== null);
+
+    addTokenToColumn(columnIndex, 2);
+    setYou(!you);
+    resetCounter();
+  }, [gameOver, draw, gameBoard, COLUMNS, addTokenToColumn, you]);
+
+  useEffect(() => {
+    if (!playerVsPlayer && !you && !gameOver && !draw) {
+      const timer = setTimeout(() => {
+        computerMove();
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [you, gameOver, draw, playerVsPlayer, computerMove]);
+
   const handleColumnClick = (columnIndex: number) => {
+    if (!playerVsPlayer && !you) {
+      return;
+    }
     const currentPlayer = getCurrentPlayer();
     addTokenToColumn(columnIndex, currentPlayer);
 
