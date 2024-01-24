@@ -74,7 +74,6 @@ export const Players: React.FC<PlayersProps> = ({
           {playerVsPlayer ? 'PLAYER 2' : 'CPU'}
         </div>
         <div className={playerScoreStyle}>
-          {' '}
           {playerVsPlayer ? pointsPlayerTwo : pointsCpu}
         </div>
         <div className={playerTwoStyle}>

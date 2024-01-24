@@ -28,30 +28,112 @@ export const Game = () => {
   const [you, setYou] = useState(true);
   const initialMarkerPosition = 632 / 2;
   const [markerPosition, setMarkerPosition] = useState(initialMarkerPosition);
-  const [counter, setCounter] = useState(10);
+  const [counter, setCounter] = useState(30);
   const [pointsPlayerOne, setPointsPlayerOne] = useState(0);
   const [pointsPlayerTwo, setPointsPlayerTwo] = useState(0);
   const [pointsYou, setPointsYou] = useState(0);
   const [pointsCpu, setPointsCpu] = useState(0);
+  const [draw, setDraw] = useState(false);
 
   const ROWS = 6;
   const COLUMNS = 7;
+
+  const checkLine = (
+    board: Cell[][],
+    startRow: number,
+    startCol: number,
+    deltaRow: number,
+    deltaCol: number,
+    player: Cell
+  ): { row: number; col: number }[] | null => {
+    let tokens = [];
+    let r = startRow,
+      c = startCol;
+
+    while (r >= 0 && r < ROWS && c >= 0 && c < COLUMNS) {
+      if (board[r][c] === player) {
+        tokens.push({ row: r, col: c });
+        if (tokens.length === 4) {
+          return tokens;
+        }
+      } else {
+        tokens = [];
+      }
+      r += deltaRow;
+      c += deltaCol;
+    }
+
+    return null;
+  };
+
+  const checkForAdjacentTokens = (
+    board: Cell[][],
+    row: number,
+    col: number,
+    player: Cell
+  ): { row: number; col: number }[] | null => {
+    let tokens = checkLine(board, row, Math.max(0, col - 3), 0, 1, player);
+    if (tokens) return tokens;
+
+    tokens = checkLine(board, Math.max(0, row - 3), col, 1, 0, player);
+    if (tokens) return tokens;
+
+    for (let i = -3; i <= 3; i++) {
+      tokens = checkLine(board, row + i, col + i, 1, 1, player);
+      if (tokens) return tokens;
+
+      tokens = checkLine(board, row + i, col - i, 1, -1, player);
+      if (tokens) return tokens;
+    }
+
+    return null;
+  };
   const initialBoard: Cell[][] = Array.from({ length: ROWS }, () =>
     Array(COLUMNS).fill(null)
   );
 
   const [gameBoard, setGameBoard] = useState<Cell[][]>(initialBoard);
+  const [winningTokens, setWinningTokens] = useState<
+    { row: number; col: number }[]
+  >([]);
+  const [gameOver, setGameOver] = useState(false);
 
   const addTokenToColumn = (column: number, player: Cell) => {
     const newBoard = [...gameBoard];
+    let addedRow = -1;
     for (let row = ROWS - 1; row >= 0; row--) {
       if (newBoard[row][column] === null) {
         newBoard[row][column] = player;
+        addedRow = row;
         break;
       }
     }
+
+    if (addedRow !== -1) {
+      const winningSequence = checkForAdjacentTokens(
+        newBoard,
+        addedRow,
+        column,
+        player
+      );
+      if (winningSequence) {
+        setWinningTokens(winningSequence);
+        setGameOver(true);
+      }
+    }
+
     setGameBoard(newBoard);
+    const isBoardFull = newBoard.every(row => row.every(cell => cell !== null));
+    if (isBoardFull) {
+      setDraw(true);
+    }
   };
+
+  useEffect(() => {
+    if (draw) {
+      setGame(false);
+    }
+  }, [draw]);
 
   const getCurrentPlayer = () => {
     if (playerVsPlayer) {
@@ -64,7 +146,7 @@ export const Game = () => {
   useEffect(() => {
     let timerId: NodeJS.Timeout | number;
 
-    if (!isOpened && game) {
+    if (!isOpened && game && !draw) {
       timerId = setInterval(() => {
         setCounter(prevCounter => (prevCounter > 0 ? prevCounter - 1 : 0));
       }, 1000);
@@ -73,10 +155,10 @@ export const Game = () => {
     return () => {
       if (timerId) clearInterval(timerId);
     };
-  }, [isOpened, game]);
+  }, [isOpened, game, draw]);
 
   useEffect(() => {
-    if (counter === 0) {
+    if (counter === 0 || gameOver) {
       if (playerVsPlayer) {
         setWinsPlayerOne(!playerOne);
         if (playerOne) {
@@ -94,7 +176,7 @@ export const Game = () => {
       }
       setGame(false);
     }
-  }, [counter, playerOne, you, playerVsPlayer]);
+  }, [counter, playerOne, you, playerVsPlayer, gameOver]);
 
   const handleColumnClick = (columnIndex: number) => {
     const currentPlayer = getCurrentPlayer();
@@ -109,7 +191,7 @@ export const Game = () => {
   };
 
   const resetCounter = () => {
-    setCounter(10);
+    setCounter(30);
   };
 
   const toggleMenuGame = useCallback(() => {
@@ -142,13 +224,23 @@ export const Game = () => {
     };
   }, [isOpened, toggleMenuGame]);
 
-  const handleRestartClick = () => {};
+  const handleRestartClick = () => {
+    setPointsPlayerOne(0);
+    setPointsPlayerTwo(0);
+    setPointsYou(0);
+    setPointsCpu(0);
+    handlePlayAgainClick();
+  };
 
   const handlePlayAgainClick = () => {
-    setCounter(10);
+    setCounter(30);
     setGame(true);
     setWinsPlayerOne(false);
     setWinsYou(false);
+    setGameBoard(initialBoard);
+    setGameOver(false);
+    setWinningTokens([]);
+    setDraw(false);
   };
 
   const handleRestart = () => {
@@ -307,6 +399,9 @@ export const Game = () => {
                         ? finalTopMobile
                         : finalTopDesktop;
                       const dynamicStyle = getDynamicStyle(finalTop);
+                      const isWinningToken = winningTokens.some(
+                        wt => wt.row === rowIndex && wt.col === colIndex
+                      );
 
                       return (
                         <div
@@ -326,15 +421,59 @@ export const Game = () => {
                           }}
                         >
                           {cell === 1 && (
-                            <div>
-                              {(isDesktop || isTablet) && <TokenRedLarge />}
-                              {isMobile && <TokenRedSmall />}
+                            <div className={scss.game__tokensContainer}>
+                              {(isDesktop || isTablet) && (
+                                <TokenRedLarge
+                                  className={scss.game__tokenIcon}
+                                />
+                              )}
+                              {isMobile && (
+                                <TokenRedSmall
+                                  className={scss.game__tokenIcon}
+                                />
+                              )}
+                              {isWinningToken && (
+                                <>
+                                  {(isDesktop || isTablet) && (
+                                    <div
+                                      className={scss.game__tokenCircleDesktop}
+                                    ></div>
+                                  )}
+                                  {isMobile && (
+                                    <div
+                                      className={scss.game__tokenCircleMobile}
+                                    ></div>
+                                  )}
+                                </>
+                              )}
                             </div>
                           )}
                           {cell === 2 && (
-                            <div>
-                              {(isDesktop || isTablet) && <TokenYellowLarge />}
-                              {isMobile && <TokenYellowSmall />}
+                            <div className={scss.game__tokensContainer}>
+                              {(isDesktop || isTablet) && (
+                                <TokenYellowLarge
+                                  className={scss.game__tokenIcon}
+                                />
+                              )}
+                              {isMobile && (
+                                <TokenYellowSmall
+                                  className={scss.game__tokenIcon}
+                                />
+                              )}
+                              {isWinningToken && (
+                                <>
+                                  {(isDesktop || isTablet) && (
+                                    <div
+                                      className={scss.game__tokenCircleDesktop}
+                                    ></div>
+                                  )}
+                                  {isMobile && (
+                                    <div
+                                      className={scss.game__tokenCircleMobile}
+                                    ></div>
+                                  )}
+                                </>
+                              )}
                             </div>
                           )}
                         </div>
@@ -367,12 +506,14 @@ export const Game = () => {
           <div className={winsStyle}>
             {playerVsPlayer ? (
               <p className={scss.game__winsPlayer}>
-                {winsPlayerOne ? 'PLAYER 1' : 'PLAYER 2'}
+                {draw ? 'NO WINNER' : winsPlayerOne ? 'PLAYER 1' : 'PLAYER 2'}
               </p>
             ) : (
-              <p className={scss.game__winsPlayer}>{winsYou ? 'YOU' : 'CPU'}</p>
+              <p className={scss.game__winsPlayer}>
+                {draw ? 'NO WINNER' : winsYou ? 'YOU' : 'CPU'}
+              </p>
             )}
-            <p className={scss.game__winsWins}>WINS</p>
+            <p className={scss.game__winsWins}>{draw ? 'DRAW' : 'WINS'}</p>
             <button
               type="button"
               className={scss.game__winsButton}

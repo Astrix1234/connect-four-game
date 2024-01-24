@@ -3,6 +3,7 @@
     height: 100vh;
     position: relative;
     display: flex;
+    overflow: hidden;
 
     &__bottomBar {
         position: absolute;
@@ -37,13 +38,38 @@
         z-index: 200;
     }
 
+    &__tokensContainer {
+        position: relative;
+    }
+
+    &__tokenIcon {
+        position: absolute;
+    }
+
+    &__tokenCircleDesktop {
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 7px solid var(--light);
+        transform: translate(17px, 17px);
+    }
+
+    &__tokenCircleMobile {
+        position: absolute;
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: 5px solid var(--light);
+        transform: translate(11px, 11px);
+    }
+
     &__boardWhite {
         z-index: 300;
         position: absolute;
         pointer-events: none;
     }
-
-
 
     &__boardContainer {
         position: relative;
