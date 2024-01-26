@@ -9,7 +9,7 @@ realistic projects.
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
+  - [Screenshots](#screenshot)
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
@@ -34,10 +34,10 @@ Users should be able to:
 - **Bonus**: See the discs animate into their position when a move is made
 - **Bonus**: Play against the computer
 
-### Screenshot
+### Screenshots
 
-![1](./screenshots/Screenshot_1.png) ![2](./screenshots/Screenshot_1.png)
-![3](./screenshots/Screenshot_1.png) ![4](./screenshots/Screenshot_1.png)
+![1](./screenshots/Screenshot_1.png) ![2](./screenshots/Screenshot_2.png)
+![3](./screenshots/Screenshot_3.png) ![4](./screenshots/Screenshot_4.png)
 
 ### Links
 
