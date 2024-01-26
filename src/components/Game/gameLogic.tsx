@@ -221,9 +221,9 @@ export const minimax = (
   const winner = findWinner(board, player1, player2);
   if (depth === 0 || winner !== null) {
     if (winner === player2) {
-      return [null, 100000];
+      return [null, 1000000];
     } else if (winner === player1) {
-      return [null, -100000];
+      return [null, -1000000];
     } else {
       return [null, 0];
     }
