@@ -36,8 +36,8 @@ Users should be able to:
 
 ### Screenshot
 
-![1](./Screenshot_1.png) ![2](./Screenshot_1.png) ![3](./Screenshot_1.png)
-![4](./Screenshot_1.png)
+![1](./screenshots/Screenshot_1.png) ![2](./screenshots/Screenshot_1.png)
+![3](./screenshots/Screenshot_1.png) ![4](./screenshots/Screenshot_1.png)
 
 ### Links
 
