@@ -66,7 +66,7 @@ const evaluatePosition = (
   score += evaluateMove(board, row, col, player, 1500, 150, 15);
   score -= evaluateMove(board, row, col, opponent, 1200, 120, 12);
 
-  if (col === 3) score += 10;
+  if (col === 3) score += 100;
 
   return score;
 };
