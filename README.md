@@ -41,8 +41,10 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: (https://github.com/Astrix1234/connect-four-game)
-- Live Site URL: (astrix1234.github.io/connect-four-game/)
+- Solution URL:
+  [GitHub Repository](https://github.com/Astrix1234/connect-four-game)
+- Live Site URL:
+  [Connect Four Game](https://astrix1234.github.io/connect-four-game/)
 
 ## My process
 
