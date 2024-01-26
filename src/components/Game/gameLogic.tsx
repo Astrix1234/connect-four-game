@@ -63,9 +63,10 @@ const evaluatePosition = (
   const opponent = player === 1 ? 2 : 1;
   let score = 0;
 
-  score += evaluateMove(board, row, col, player, 1000, 100, 10);
+  score += evaluateMove(board, row, col, player, 1500, 150, 15);
+  score -= evaluateMove(board, row, col, opponent, 1200, 120, 12);
 
-  score -= evaluateMove(board, row, col, opponent, 800, 80, 8);
+  if (col === 3) score += 10;
 
   return score;
 };
@@ -195,20 +196,30 @@ const findWinner = (
 };
 
 export const pickBestMove = (board: Board, player: Cell): number => {
-  let bestScore = -Infinity;
-  let bestCol = 0;
+  let topMoves: { col: number; score: number }[] = [];
+  let maxScore = -Infinity;
+
   for (let col = 0; col < board[0].length; col++) {
     const row = getNextPlayableRow(board, col);
     if (row !== undefined) {
       const tempBoard = makeMove(board, row, col, player);
       const score = evaluatePosition(tempBoard, row, col, player);
-      if (score > bestScore) {
-        bestScore = score;
-        bestCol = col;
+
+      if (score > maxScore) {
+        topMoves = [{ col, score }];
+        maxScore = score;
+      } else if (score === maxScore) {
+        topMoves.push({ col, score });
       }
     }
   }
-  return bestCol;
+
+  if (topMoves.length > 1) {
+    const randomIndex = Math.floor(Math.random() * topMoves.length);
+    return topMoves[randomIndex].col;
+  }
+
+  return topMoves.length > 0 ? topMoves[0].col : 0;
 };
 
 export const minimax = (
