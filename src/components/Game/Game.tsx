@@ -14,8 +14,11 @@ import { ReactComponent as TokenRedSmall } from '../../assets/images/counter-red
 import { ReactComponent as TokenYellowLarge } from '../../assets/images/counter-yellow-large.svg';
 import { ReactComponent as TokenYellowSmall } from '../../assets/images/counter-yellow-small.svg';
 import { GameContext } from '../App';
+import { pickBestMove } from './gameLogic';
+import { minimax } from './gameLogic';
 
-type Cell = null | 1 | 2;
+export type Cell = null | 1 | 2;
+export type Board = Cell[][];
 
 export const Game = () => {
   const { playerVsPlayer } = useContext(GameContext);
@@ -37,6 +40,16 @@ export const Game = () => {
 
   const ROWS = 6;
   const COLUMNS = 7;
+
+  const initialBoard: Cell[][] = Array.from({ length: ROWS }, () =>
+    Array(COLUMNS).fill(null)
+  );
+
+  const [gameBoard, setGameBoard] = useState<Cell[][]>(initialBoard);
+  const [winningTokens, setWinningTokens] = useState<
+    { row: number; col: number }[]
+  >([]);
+  const [gameOver, setGameOver] = useState(false);
 
   const checkLine = useCallback(
     (
@@ -94,15 +107,6 @@ export const Game = () => {
     },
     [checkLine]
   );
-  const initialBoard: Cell[][] = Array.from({ length: ROWS }, () =>
-    Array(COLUMNS).fill(null)
-  );
-
-  const [gameBoard, setGameBoard] = useState<Cell[][]>(initialBoard);
-  const [winningTokens, setWinningTokens] = useState<
-    { row: number; col: number }[]
-  >([]);
-  const [gameOver, setGameOver] = useState(false);
 
   const addTokenToColumn = useCallback(
     (column: number, player: Cell) => {
@@ -196,25 +200,31 @@ export const Game = () => {
   }, [counter, playerOne, you, playerVsPlayer, gameOver]);
 
   const computerMove = useCallback(() => {
-    if (gameOver || draw) {
-      return;
+    if (gameOver || draw) return;
+
+    let bestColumn;
+
+    const totalMoves = gameBoard.flat().filter(cell => cell !== null).length;
+    if (totalMoves < 3) {
+      bestColumn = pickBestMove(gameBoard, 2);
+    } else {
+      const depth = 5;
+      [bestColumn] = minimax(gameBoard, depth, true, 1, 2);
     }
 
-    let columnIndex;
-    do {
-      columnIndex = Math.floor(Math.random() * COLUMNS);
-    } while (gameBoard[0][columnIndex] !== null);
+    if (bestColumn !== null) {
+      addTokenToColumn(bestColumn, 2);
+    }
 
-    addTokenToColumn(columnIndex, 2);
     setYou(!you);
     resetCounter();
-  }, [gameOver, draw, gameBoard, COLUMNS, addTokenToColumn, you]);
+  }, [gameBoard, gameOver, draw, addTokenToColumn, you]);
 
   useEffect(() => {
     if (!playerVsPlayer && !you && !gameOver && !draw) {
       const timer = setTimeout(() => {
         computerMove();
-      }, 1000);
+      }, 500);
 
       return () => clearTimeout(timer);
     }
