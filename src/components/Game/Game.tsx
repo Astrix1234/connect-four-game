@@ -14,8 +14,8 @@ import { ReactComponent as TokenRedSmall } from '../../assets/images/counter-red
 import { ReactComponent as TokenYellowLarge } from '../../assets/images/counter-yellow-large.svg';
 import { ReactComponent as TokenYellowSmall } from '../../assets/images/counter-yellow-small.svg';
 import { GameContext } from '../App';
-import { pickBestMove } from './gameLogic';
-import { minimax } from './gameLogic';
+import { pickBestMove } from './gameWithAILogic';
+import { minimax } from './gameWithAILogic';
 
 export type Cell = null | 1 | 2;
 export type Board = Cell[][];
